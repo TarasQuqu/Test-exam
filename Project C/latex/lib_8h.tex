@@ -1,0 +1,411 @@
+\hypertarget{lib_8h}{}\doxysection{D\+:/\+Project C/server/lib.h File Reference}
+\label{lib_8h}\index{D:/Project C/server/lib.h@{D:/Project C/server/lib.h}}
+
+
+File contains declarations and implementation for all functions that use Server This file has implementation for all functions which involve in the creating client.\+For example function for creating socket or function for creating connect And all functions who are responsible for the server logic is here.  
+
+
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$syslog.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$termios.\+h$>$}\newline
+{\ttfamily \#include $<$stdio\+\_\+ext.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}lib.\+h\char`\"{}}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{lib_8h_a614217d263be1fb1a5f76e2ff7be19a2}\label{lib_8h_a614217d263be1fb1a5f76e2ff7be19a2}} 
+\#define {\bfseries P\+O\+RT}~13664
+\item 
+\mbox{\Hypertarget{lib_8h_a1d5dab30b404fab91608086105afc78c}\label{lib_8h_a1d5dab30b404fab91608086105afc78c}} 
+\#define {\bfseries M\+A\+X\+\_\+\+B\+U\+F\+F\+ER}~1024
+\item 
+\mbox{\Hypertarget{lib_8h_ad99791c477f9ef3c3e5914ac45bb71fe}\label{lib_8h_ad99791c477f9ef3c3e5914ac45bb71fe}} 
+\#define {\bfseries A\+U\+T\+H\+\_\+\+B\+UF}~24
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{lib_8h_a46245f603a3b7d2ef233ff2012f921a6}{socket\+Create}} (int socket\+Type)
+\begin{DoxyCompactList}\small\item\em This function serves to create socket. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{lib_8h_af837db8c0b39a3c938c5a39f65dc8b15}{connect\+Create}} (int socket, const char $\ast$ip, int port)
+\item 
+void \mbox{\hyperlink{lib_8h_a1656f2652351255936110b679addb51b}{recieve\+Data}} (int socket)
+\item 
+int \mbox{\hyperlink{lib_8h_a3f5ec9f1232f14cfe1e56d3c624169cf}{connection\+Close}} (int socket)
+\item 
+int \mbox{\hyperlink{lib_8h_a671e56ce786646f0d78271a3985fcc1b}{port\+Binding}} (int socket, int port)
+\item 
+int \mbox{\hyperlink{lib_8h_aa2f641688a4ca20a97587266a699bf54}{listen\+Client}} (int socket, int backlog)
+\item 
+void \mbox{\hyperlink{lib_8h_a965392d15701d81fb597912d79433fc4}{accept\+Clients}} (int socket, void($\ast$func)())
+\item 
+void \mbox{\hyperlink{lib_8h_a9f09357055c19f7310fd7a9c53553482}{authorization}} ()
+\item 
+char \mbox{\hyperlink{lib_8h_a2c72e3d52076dbc0b490e5a27709101d}{check\+Login}} ()
+\item 
+void \mbox{\hyperlink{lib_8h_a92e0fab84dfbd5d14f9e11da7d4fb648}{get\+Stud\+List}} (int socket)
+\item 
+void \mbox{\hyperlink{lib_8h_a2fbad71a432c60e1292eabb00abf8e8d}{get\+All\+List}} ()
+\item 
+void \mbox{\hyperlink{lib_8h_a675d167b7f3651d95a2b3280b4dab1bb}{get\+Ex\+List}} (int socket)
+\item 
+void \mbox{\hyperlink{lib_8h_a11016e183c729aa4cd2dc09668a3074b}{get\+Group\+List}} (int socket)
+\item 
+void \mbox{\hyperlink{lib_8h_ad1205d06d62c0b1bb7b111090cecbc64}{get\+Stud\+Group\+List}} (int socket, char $\ast$group\+Name)
+\item 
+void \mbox{\hyperlink{lib_8h_ad091750abf26dc6307b577e0e442fc77}{get\+Right\+Answers}} (int socket, char $\ast$exam\+Name)
+\item 
+void \mbox{\hyperlink{lib_8h_a7273f2d6a0613a04b1f2aca6465da912}{get\+Stud\+Result}} (int socket, char $\ast$stud\+Login)
+\item 
+void \mbox{\hyperlink{lib_8h_a0687aec7a72e3ef237c6a69701b459eb}{check\+Stud\+Exam}} (int socket, char $\ast$exam\+Name)
+\item 
+long \mbox{\hyperlink{lib_8h_a67920f222e5bb0c5c89fc41c3e05c1f8}{hash}} (char $\ast$str)
+\item 
+\mbox{\Hypertarget{lib_8h_a78e3eb86b52cdbe51db31bd2efcd1571}\label{lib_8h_a78e3eb86b52cdbe51db31bd2efcd1571}} 
+void {\bfseries new\+Connection} (int socket)
+\item 
+\mbox{\Hypertarget{lib_8h_aa898c23f3f8cba21ffceeb5c5422f2bb}\label{lib_8h_aa898c23f3f8cba21ffceeb5c5422f2bb}} 
+void {\bfseries get\+All\+List} (int socket)
+\item 
+void \mbox{\hyperlink{lib_8h_a91485a891948f30158cec87a16065ab0}{authorization}} (int socket)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{lib_8h_aab1651148ef553a6e7de6544a3e667b1}\label{lib_8h_aab1651148ef553a6e7de6544a3e667b1}} 
+char {\bfseries login} \mbox{[}A\+U\+T\+H\+\_\+\+B\+UF\mbox{]}
+\item 
+char \mbox{\hyperlink{lib_8h_af45c774b007244b96bea8c6a04529344}{password}} \mbox{[}A\+U\+T\+H\+\_\+\+B\+UF\mbox{]}
+\item 
+char \mbox{\hyperlink{lib_8h_a5284e728aa2914c149f6e346c6e1d9dc}{permission}} \mbox{[}1\mbox{]}
+\item 
+int \mbox{\hyperlink{lib_8h_af6da6a9a9197dac2d8eeb9ec5c97c440}{is\+Client\+Login\+In}} = 0
+\item 
+char \mbox{\hyperlink{lib_8h_a77f130a44f092d7ee30787ea462ec4cf}{error\+Msg}} \mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]} = \char`\"{}error\char`\"{}
+\item 
+char \mbox{\hyperlink{lib_8h_a14303ec41c811b425c022390df152f6d}{ok\+Msg}} \mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]} = \char`\"{}ok\char`\"{}
+\item 
+char \mbox{\hyperlink{lib_8h_a2a981d16a166afc81d05842aa63e2e3d}{student\+List}} \mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}
+\item 
+char \mbox{\hyperlink{lib_8h_a9675eaf5e9ebd40e675575e62e14d20b}{accs\+List}} \mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}
+\item 
+char \mbox{\hyperlink{lib_8h_ac9984b6e45b784785036934908144d08}{exams\+List}} \mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}
+\item 
+char \mbox{\hyperlink{lib_8h_a262afb69f5da32b9afdca91689bc84ac}{group\+List}} \mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}
+\item 
+char \mbox{\hyperlink{lib_8h_aac7f9dc91f5482e53d11dd0fd0880bdf}{stud\+Group\+List}} \mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}
+\item 
+char \mbox{\hyperlink{lib_8h_a5a1fe968a638482ecda4b17c7b448944}{right\+Answers\+Exam}} \mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}
+\item 
+char \mbox{\hyperlink{lib_8h_a3344e6313b70c1424e42891919c0af8f}{stud\+Result}} \mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+File contains declarations and implementation for all functions that use Server This file has implementation for all functions which involve in the creating client.\+For example function for creating socket or function for creating connect And all functions who are responsible for the server logic is here. 
+
+\begin{DoxyAuthor}{Author}
+Anton Serhiienko , Taras Kuts 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+8 September 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{lib_8h_a965392d15701d81fb597912d79433fc4}\label{lib_8h_a965392d15701d81fb597912d79433fc4}} 
+\index{lib.h@{lib.h}!acceptClients@{acceptClients}}
+\index{acceptClients@{acceptClients}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{acceptClients()}{acceptClients()}}
+{\footnotesize\ttfamily void accept\+Clients (\begin{DoxyParamCaption}\item[{int}]{socket,  }\item[{void($\ast$)()}]{func }\end{DoxyParamCaption})}
+
+This function serves to accept new connections if the situation requires it 
+\begin{DoxyParams}{Parameters}
+{\em Socket,func} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_a9f09357055c19f7310fd7a9c53553482}\label{lib_8h_a9f09357055c19f7310fd7a9c53553482}} 
+\index{lib.h@{lib.h}!authorization@{authorization}}
+\index{authorization@{authorization}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{authorization()}{authorization()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void authorization (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This function serves to create authorization,finally in this function we will who was connected(\+Admin,\+Egzamenator,\+Student) and send this information to the client \mbox{\Hypertarget{lib_8h_a91485a891948f30158cec87a16065ab0}\label{lib_8h_a91485a891948f30158cec87a16065ab0}} 
+\index{lib.h@{lib.h}!authorization@{authorization}}
+\index{authorization@{authorization}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{authorization()}{authorization()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void authorization (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to create authorization,finally in this function we will who was connected(\+Admin,\+Egzamenator,\+Student) 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_a2c72e3d52076dbc0b490e5a27709101d}\label{lib_8h_a2c72e3d52076dbc0b490e5a27709101d}} 
+\index{lib.h@{lib.h}!checkLogin@{checkLogin}}
+\index{checkLogin@{checkLogin}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{checkLogin()}{checkLogin()}}
+{\footnotesize\ttfamily char check\+Login (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This function serves to check login \mbox{\Hypertarget{lib_8h_a0687aec7a72e3ef237c6a69701b459eb}\label{lib_8h_a0687aec7a72e3ef237c6a69701b459eb}} 
+\index{lib.h@{lib.h}!checkStudExam@{checkStudExam}}
+\index{checkStudExam@{checkStudExam}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{checkStudExam()}{checkStudExam()}}
+{\footnotesize\ttfamily void check\+Stud\+Exam (\begin{DoxyParamCaption}\item[{int}]{socket,  }\item[{char $\ast$}]{exam\+Name }\end{DoxyParamCaption})}
+
+This function serves to check exam 
+\begin{DoxyParams}{Parameters}
+{\em socket,exam\+Name} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_af837db8c0b39a3c938c5a39f65dc8b15}\label{lib_8h_af837db8c0b39a3c938c5a39f65dc8b15}} 
+\index{lib.h@{lib.h}!connectCreate@{connectCreate}}
+\index{connectCreate@{connectCreate}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{connectCreate()}{connectCreate()}}
+{\footnotesize\ttfamily int connect\+Create (\begin{DoxyParamCaption}\item[{int}]{socket,  }\item[{const char $\ast$}]{ip,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+This function serves to create connection with klient 
+\begin{DoxyParams}{Parameters}
+{\em Socket,ip,port} & This function serves to create connection with server \\
+\hline
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_a3f5ec9f1232f14cfe1e56d3c624169cf}\label{lib_8h_a3f5ec9f1232f14cfe1e56d3c624169cf}} 
+\index{lib.h@{lib.h}!connectionClose@{connectionClose}}
+\index{connectionClose@{connectionClose}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{connectionClose()}{connectionClose()}}
+{\footnotesize\ttfamily int connection\+Close (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to close connection if the situation requires it 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_a2fbad71a432c60e1292eabb00abf8e8d}\label{lib_8h_a2fbad71a432c60e1292eabb00abf8e8d}} 
+\index{lib.h@{lib.h}!getAllList@{getAllList}}
+\index{getAllList@{getAllList}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{getAllList()}{getAllList()}}
+{\footnotesize\ttfamily void get\+All\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This function serves to get all lists of student and send to client \mbox{\Hypertarget{lib_8h_a675d167b7f3651d95a2b3280b4dab1bb}\label{lib_8h_a675d167b7f3651d95a2b3280b4dab1bb}} 
+\index{lib.h@{lib.h}!getExList@{getExList}}
+\index{getExList@{getExList}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{getExList()}{getExList()}}
+{\footnotesize\ttfamily void get\+Ex\+List (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to get the list of exams and send to client 
+\begin{DoxyParams}{Parameters}
+{\em socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_a11016e183c729aa4cd2dc09668a3074b}\label{lib_8h_a11016e183c729aa4cd2dc09668a3074b}} 
+\index{lib.h@{lib.h}!getGroupList@{getGroupList}}
+\index{getGroupList@{getGroupList}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{getGroupList()}{getGroupList()}}
+{\footnotesize\ttfamily void get\+Group\+List (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to get the list of student in selected group and send to client 
+\begin{DoxyParams}{Parameters}
+{\em socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_ad091750abf26dc6307b577e0e442fc77}\label{lib_8h_ad091750abf26dc6307b577e0e442fc77}} 
+\index{lib.h@{lib.h}!getRightAnswers@{getRightAnswers}}
+\index{getRightAnswers@{getRightAnswers}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{getRightAnswers()}{getRightAnswers()}}
+{\footnotesize\ttfamily void get\+Right\+Answers (\begin{DoxyParamCaption}\item[{int}]{socket,  }\item[{char $\ast$}]{exam\+Name }\end{DoxyParamCaption})}
+
+This function serves to get the list of right answers 
+\begin{DoxyParams}{Parameters}
+{\em socket,name} & of the exam \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_ad1205d06d62c0b1bb7b111090cecbc64}\label{lib_8h_ad1205d06d62c0b1bb7b111090cecbc64}} 
+\index{lib.h@{lib.h}!getStudGroupList@{getStudGroupList}}
+\index{getStudGroupList@{getStudGroupList}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{getStudGroupList()}{getStudGroupList()}}
+{\footnotesize\ttfamily void get\+Stud\+Group\+List (\begin{DoxyParamCaption}\item[{int}]{socket,  }\item[{char $\ast$}]{group\+Name }\end{DoxyParamCaption})}
+
+This function serves to get the list of student and send to client 
+\begin{DoxyParams}{Parameters}
+{\em socket,group} & name \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_a92e0fab84dfbd5d14f9e11da7d4fb648}\label{lib_8h_a92e0fab84dfbd5d14f9e11da7d4fb648}} 
+\index{lib.h@{lib.h}!getStudList@{getStudList}}
+\index{getStudList@{getStudList}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{getStudList()}{getStudList()}}
+{\footnotesize\ttfamily void get\+Stud\+List (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to get the list of student and send to client 
+\begin{DoxyParams}{Parameters}
+{\em socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_a7273f2d6a0613a04b1f2aca6465da912}\label{lib_8h_a7273f2d6a0613a04b1f2aca6465da912}} 
+\index{lib.h@{lib.h}!getStudResult@{getStudResult}}
+\index{getStudResult@{getStudResult}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{getStudResult()}{getStudResult()}}
+{\footnotesize\ttfamily void get\+Stud\+Result (\begin{DoxyParamCaption}\item[{int}]{socket,  }\item[{char $\ast$}]{stud\+Login }\end{DoxyParamCaption})}
+
+This function serves to get the result of the exam and send it to the client 
+\begin{DoxyParams}{Parameters}
+{\em socket,login} & of the student \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_a67920f222e5bb0c5c89fc41c3e05c1f8}\label{lib_8h_a67920f222e5bb0c5c89fc41c3e05c1f8}} 
+\index{lib.h@{lib.h}!hash@{hash}}
+\index{hash@{hash}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{hash()}{hash()}}
+{\footnotesize\ttfamily long hash (\begin{DoxyParamCaption}\item[{char $\ast$}]{str }\end{DoxyParamCaption})}
+
+This function serves to hashing the passwords. 
+\begin{DoxyParams}{Parameters}
+{\em string} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_aa2f641688a4ca20a97587266a699bf54}\label{lib_8h_aa2f641688a4ca20a97587266a699bf54}} 
+\index{lib.h@{lib.h}!listenClient@{listenClient}}
+\index{listenClient@{listenClient}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{listenClient()}{listenClient()}}
+{\footnotesize\ttfamily int listen\+Client (\begin{DoxyParamCaption}\item[{int}]{socket,  }\item[{int}]{backlog }\end{DoxyParamCaption})}
+
+This function serves to listen client ,is he connected or not 
+\begin{DoxyParams}{Parameters}
+{\em Socket,back\+LoG} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+listening 
+\end{DoxyReturn}
+\mbox{\Hypertarget{lib_8h_a671e56ce786646f0d78271a3985fcc1b}\label{lib_8h_a671e56ce786646f0d78271a3985fcc1b}} 
+\index{lib.h@{lib.h}!portBinding@{portBinding}}
+\index{portBinding@{portBinding}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{portBinding()}{portBinding()}}
+{\footnotesize\ttfamily int port\+Binding (\begin{DoxyParamCaption}\item[{int}]{socket,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+This function serves to get IP of the server 
+\begin{DoxyParams}{Parameters}
+{\em Socket,port} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Binded or not 
+\end{DoxyReturn}
+\mbox{\Hypertarget{lib_8h_a1656f2652351255936110b679addb51b}\label{lib_8h_a1656f2652351255936110b679addb51b}} 
+\index{lib.h@{lib.h}!recieveData@{recieveData}}
+\index{recieveData@{recieveData}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{recieveData()}{recieveData()}}
+{\footnotesize\ttfamily void recieve\+Data (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to send and receive data 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{lib_8h_a46245f603a3b7d2ef233ff2012f921a6}\label{lib_8h_a46245f603a3b7d2ef233ff2012f921a6}} 
+\index{lib.h@{lib.h}!socketCreate@{socketCreate}}
+\index{socketCreate@{socketCreate}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{socketCreate()}{socketCreate()}}
+{\footnotesize\ttfamily int socket\+Create (\begin{DoxyParamCaption}\item[{int}]{socket\+Type }\end{DoxyParamCaption})}
+
+
+
+This function serves to create socket. 
+
+This function serves to create socket 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Socket\+ID
+\end{DoxyReturn}
+This array serves for containing result of the exam 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{lib_8h_a9675eaf5e9ebd40e675575e62e14d20b}\label{lib_8h_a9675eaf5e9ebd40e675575e62e14d20b}} 
+\index{lib.h@{lib.h}!accsList@{accsList}}
+\index{accsList@{accsList}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{accsList}{accsList}}
+{\footnotesize\ttfamily char accs\+List\mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}}
+
+This array serves for containing list of the student \mbox{\Hypertarget{lib_8h_a77f130a44f092d7ee30787ea462ec4cf}\label{lib_8h_a77f130a44f092d7ee30787ea462ec4cf}} 
+\index{lib.h@{lib.h}!errorMsg@{errorMsg}}
+\index{errorMsg@{errorMsg}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{errorMsg}{errorMsg}}
+{\footnotesize\ttfamily char error\+Msg\mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]} = \char`\"{}error\char`\"{}}
+
+This array serves for checking login of client \mbox{\Hypertarget{lib_8h_ac9984b6e45b784785036934908144d08}\label{lib_8h_ac9984b6e45b784785036934908144d08}} 
+\index{lib.h@{lib.h}!examsList@{examsList}}
+\index{examsList@{examsList}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{examsList}{examsList}}
+{\footnotesize\ttfamily char exams\+List\mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}}
+
+This array serves for containing list of account \mbox{\Hypertarget{lib_8h_a262afb69f5da32b9afdca91689bc84ac}\label{lib_8h_a262afb69f5da32b9afdca91689bc84ac}} 
+\index{lib.h@{lib.h}!groupList@{groupList}}
+\index{groupList@{groupList}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{groupList}{groupList}}
+{\footnotesize\ttfamily char group\+List\mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}}
+
+This array serves for containing list of exams \mbox{\Hypertarget{lib_8h_af6da6a9a9197dac2d8eeb9ec5c97c440}\label{lib_8h_af6da6a9a9197dac2d8eeb9ec5c97c440}} 
+\index{lib.h@{lib.h}!isClientLoginIn@{isClientLoginIn}}
+\index{isClientLoginIn@{isClientLoginIn}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{isClientLoginIn}{isClientLoginIn}}
+{\footnotesize\ttfamily int is\+Client\+Login\+In = 0}
+
+This array serves for giving permission \mbox{\Hypertarget{lib_8h_a14303ec41c811b425c022390df152f6d}\label{lib_8h_a14303ec41c811b425c022390df152f6d}} 
+\index{lib.h@{lib.h}!okMsg@{okMsg}}
+\index{okMsg@{okMsg}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{okMsg}{okMsg}}
+{\footnotesize\ttfamily char ok\+Msg\mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]} = \char`\"{}ok\char`\"{}}
+
+This array serves for containing errors \mbox{\Hypertarget{lib_8h_af45c774b007244b96bea8c6a04529344}\label{lib_8h_af45c774b007244b96bea8c6a04529344}} 
+\index{lib.h@{lib.h}!password@{password}}
+\index{password@{password}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{password}{password}}
+{\footnotesize\ttfamily char password\mbox{[}A\+U\+T\+H\+\_\+\+B\+UF\mbox{]}}
+
+This array serves for containing logins \mbox{\Hypertarget{lib_8h_a5284e728aa2914c149f6e346c6e1d9dc}\label{lib_8h_a5284e728aa2914c149f6e346c6e1d9dc}} 
+\index{lib.h@{lib.h}!permission@{permission}}
+\index{permission@{permission}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{permission}{permission}}
+{\footnotesize\ttfamily char permission\mbox{[}1\mbox{]}}
+
+This array serves for containing passwords \mbox{\Hypertarget{lib_8h_a5a1fe968a638482ecda4b17c7b448944}\label{lib_8h_a5a1fe968a638482ecda4b17c7b448944}} 
+\index{lib.h@{lib.h}!rightAnswersExam@{rightAnswersExam}}
+\index{rightAnswersExam@{rightAnswersExam}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{rightAnswersExam}{rightAnswersExam}}
+{\footnotesize\ttfamily char right\+Answers\+Exam\mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}}
+
+This array serves for containing list of student in groups \mbox{\Hypertarget{lib_8h_a2a981d16a166afc81d05842aa63e2e3d}\label{lib_8h_a2a981d16a166afc81d05842aa63e2e3d}} 
+\index{lib.h@{lib.h}!studentList@{studentList}}
+\index{studentList@{studentList}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{studentList}{studentList}}
+{\footnotesize\ttfamily char student\+List\mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}}
+
+This array serves for containing \char`\"{}ok\char`\"{} \mbox{\Hypertarget{lib_8h_aac7f9dc91f5482e53d11dd0fd0880bdf}\label{lib_8h_aac7f9dc91f5482e53d11dd0fd0880bdf}} 
+\index{lib.h@{lib.h}!studGroupList@{studGroupList}}
+\index{studGroupList@{studGroupList}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{studGroupList}{studGroupList}}
+{\footnotesize\ttfamily char stud\+Group\+List\mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}}
+
+This array serves for containing list of groups \mbox{\Hypertarget{lib_8h_a3344e6313b70c1424e42891919c0af8f}\label{lib_8h_a3344e6313b70c1424e42891919c0af8f}} 
+\index{lib.h@{lib.h}!studResult@{studResult}}
+\index{studResult@{studResult}!lib.h@{lib.h}}
+\doxysubsubsection{\texorpdfstring{studResult}{studResult}}
+{\footnotesize\ttfamily char stud\+Result\mbox{[}M\+A\+X\+\_\+\+B\+U\+F\+F\+ER\mbox{]}}
+
+This array serves for containing right answers 

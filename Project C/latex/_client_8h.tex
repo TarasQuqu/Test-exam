@@ -1,0 +1,359 @@
+\hypertarget{_client_8h}{}\doxysection{D\+:/\+Project C/client/\+Client.h File Reference}
+\label{_client_8h}\index{D:/Project C/client/Client.h@{D:/Project C/client/Client.h}}
+
+
+This header has definiton for all functions which involve in the creating client.\+For example function for creating socket or function for creating connect And all functions by which all logic of the Client is written.  
+
+
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$fcntl.\+h$>$}\newline
+{\ttfamily \#include $<$signal.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$syslog.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$sys/types.\+h$>$}\newline
+{\ttfamily \#include $<$sys/socket.\+h$>$}\newline
+{\ttfamily \#include $<$sys/stat.\+h$>$}\newline
+{\ttfamily \#include $<$ctype.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_client_8h_a8c93019be9599d58de027298d90458c0}\label{_client_8h_a8c93019be9599d58de027298d90458c0}} 
+\#define {\bfseries E\+C\+H\+O\+\_\+\+S\+E\+R\+V\+E\+R\+\_\+\+P\+O\+RT}~7
+\item 
+\mbox{\Hypertarget{_client_8h_a5ad9ebd4f3e3ccbd58bea1d2576ae997}\label{_client_8h_a5ad9ebd4f3e3ccbd58bea1d2576ae997}} 
+\#define {\bfseries M\+A\+X1024}~1024
+\item 
+\mbox{\Hypertarget{_client_8h_a392fb874e547e582e9c66a08a1f23326}\label{_client_8h_a392fb874e547e582e9c66a08a1f23326}} 
+\#define {\bfseries M\+AX}~24
+\item 
+\mbox{\Hypertarget{_client_8h_a614217d263be1fb1a5f76e2ff7be19a2}\label{_client_8h_a614217d263be1fb1a5f76e2ff7be19a2}} 
+\#define {\bfseries P\+O\+RT}~13664
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{_client_8h_a46245f603a3b7d2ef233ff2012f921a6}{socket\+Create}} (int socket\+Type)
+\begin{DoxyCompactList}\small\item\em This function serves to create socket. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{_client_8h_af837db8c0b39a3c938c5a39f65dc8b15}{connect\+Create}} (int socket, const char $\ast$ip, int port)
+\item 
+void \mbox{\hyperlink{_client_8h_ac5c8cc6067443b1e5404029bfe5d0286}{data\+Send\+Recieve}} (int socket)
+\item 
+int \mbox{\hyperlink{_client_8h_a3f5ec9f1232f14cfe1e56d3c624169cf}{connection\+Close}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_a91485a891948f30158cec87a16065ab0}{authorization}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_a49e4dc8339ebc2aed87ecc1a7cb9e937}{admin\+Panel}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_a68975b4e59623eab11f6f6e287605d40}{temp}} (char $\ast$buf)
+\item 
+void \mbox{\hyperlink{_client_8h_a8413dcfcfb37ed14c454edbb00c98e54}{Add}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_a892e250c71fd5606f06d42432be7ce04}{Create\+Group}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_ab2a10efe2c2d5566c02df1b26ca021e3}{egzaminator\+Panel}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_a532bb986ba1e2f90760239bb38a4f90a}{Set\+Time\+Of\+Test}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_adf989d07085668f90931c5b17116c3cf}{right\+Answer}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_a6765c671721b3e1e5daed5f6f9eaaa35}{Choose\+Group\+Of\+Students}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_a34e6d7699bfe7ad10be89b413bb8dfe9}{Adding\+Answers}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_a4b195fe54be9e81f3f7498a15507d99d}{Add\+To\+Group}} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_aafa32dd1001070fdde56ac574a504e58}{Permission\+Group}} (int socket)
+\begin{DoxyCompactList}\small\item\em This function serves to give permission that gets group and then this group has permission for the selected exam. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{_client_8h_a1d6d1b6566743bcdabdcbd71542acd94}\label{_client_8h_a1d6d1b6566743bcdabdcbd71542acd94}} 
+void {\bfseries Choose\+Exam\+For\+Student} (int socket)
+\item 
+void \mbox{\hyperlink{_client_8h_a54ccb88d46f6031ab0e4442829b96eaa}{student\+Panel}} (int socket)
+\begin{DoxyCompactList}\small\item\em This function serves to check thi next things(1.\+Is the exam which entering student at general exist 2.\+Is the student in the group which gets permission for the passing this exam if yes for both questions he can start his exam and enter answers and all answers will send to the server where they will check. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{_client_8h_af5978fab9fa6dd4ced1c3a8ab1251f7b}{getch}} (void)
+\item 
+void \mbox{\hyperlink{_client_8h_a3f19d4ec9fc31e5adeaef435267b6182}{Stars}} (char $\ast$buff)
+\begin{DoxyCompactList}\small\item\em This function serves to create unreadable password. \end{DoxyCompactList}\item 
+long \mbox{\hyperlink{_client_8h_a67920f222e5bb0c5c89fc41c3e05c1f8}{hash}} (char $\ast$str)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This header has definiton for all functions which involve in the creating client.\+For example function for creating socket or function for creating connect And all functions by which all logic of the Client is written. 
+
+\begin{DoxyAuthor}{Author}
+Anton Serhiienko , Taras Kuts 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+8 September 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{_client_8h_a8413dcfcfb37ed14c454edbb00c98e54}\label{_client_8h_a8413dcfcfb37ed14c454edbb00c98e54}} 
+\index{Client.h@{Client.h}!Add@{Add}}
+\index{Add@{Add}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{Add()}{Add()}}
+{\footnotesize\ttfamily void Add (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to add smth for Admin 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a34e6d7699bfe7ad10be89b413bb8dfe9}\label{_client_8h_a34e6d7699bfe7ad10be89b413bb8dfe9}} 
+\index{Client.h@{Client.h}!AddingAnswers@{AddingAnswers}}
+\index{AddingAnswers@{AddingAnswers}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{AddingAnswers()}{AddingAnswers()}}
+{\footnotesize\ttfamily void Adding\+Answers (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to adding answers , its for egzaminator 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a4b195fe54be9e81f3f7498a15507d99d}\label{_client_8h_a4b195fe54be9e81f3f7498a15507d99d}} 
+\index{Client.h@{Client.h}!AddToGroup@{AddToGroup}}
+\index{AddToGroup@{AddToGroup}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{AddToGroup()}{AddToGroup()}}
+{\footnotesize\ttfamily void Add\+To\+Group (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to add to the group its for Admin 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a49e4dc8339ebc2aed87ecc1a7cb9e937}\label{_client_8h_a49e4dc8339ebc2aed87ecc1a7cb9e937}} 
+\index{Client.h@{Client.h}!adminPanel@{adminPanel}}
+\index{adminPanel@{adminPanel}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{adminPanel()}{adminPanel()}}
+{\footnotesize\ttfamily void admin\+Panel (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to create Admin panel and all actions that the administrator can perform 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a91485a891948f30158cec87a16065ab0}\label{_client_8h_a91485a891948f30158cec87a16065ab0}} 
+\index{Client.h@{Client.h}!authorization@{authorization}}
+\index{authorization@{authorization}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{authorization()}{authorization()}}
+{\footnotesize\ttfamily void authorization (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to create authorization,finally in this function we will who was connected(\+Admin,\+Egzamenator,\+Student) 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a6765c671721b3e1e5daed5f6f9eaaa35}\label{_client_8h_a6765c671721b3e1e5daed5f6f9eaaa35}} 
+\index{Client.h@{Client.h}!ChooseGroupOfStudents@{ChooseGroupOfStudents}}
+\index{ChooseGroupOfStudents@{ChooseGroupOfStudents}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{ChooseGroupOfStudents()}{ChooseGroupOfStudents()}}
+{\footnotesize\ttfamily void Choose\+Group\+Of\+Students (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to choose group of the students 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_af837db8c0b39a3c938c5a39f65dc8b15}\label{_client_8h_af837db8c0b39a3c938c5a39f65dc8b15}} 
+\index{Client.h@{Client.h}!connectCreate@{connectCreate}}
+\index{connectCreate@{connectCreate}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{connectCreate()}{connectCreate()}}
+{\footnotesize\ttfamily int connect\+Create (\begin{DoxyParamCaption}\item[{int}]{socket,  }\item[{const char $\ast$}]{ip,  }\item[{int}]{port }\end{DoxyParamCaption})}
+
+This function serves to create connection with server 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a3f5ec9f1232f14cfe1e56d3c624169cf}\label{_client_8h_a3f5ec9f1232f14cfe1e56d3c624169cf}} 
+\index{Client.h@{Client.h}!connectionClose@{connectionClose}}
+\index{connectionClose@{connectionClose}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{connectionClose()}{connectionClose()}}
+{\footnotesize\ttfamily int connection\+Close (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to close connection if the situation requires it 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a892e250c71fd5606f06d42432be7ce04}\label{_client_8h_a892e250c71fd5606f06d42432be7ce04}} 
+\index{Client.h@{Client.h}!CreateGroup@{CreateGroup}}
+\index{CreateGroup@{CreateGroup}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{CreateGroup()}{CreateGroup()}}
+{\footnotesize\ttfamily void Create\+Group (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to create group for Admin 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_ac5c8cc6067443b1e5404029bfe5d0286}\label{_client_8h_ac5c8cc6067443b1e5404029bfe5d0286}} 
+\index{Client.h@{Client.h}!dataSendRecieve@{dataSendRecieve}}
+\index{dataSendRecieve@{dataSendRecieve}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{dataSendRecieve()}{dataSendRecieve()}}
+{\footnotesize\ttfamily void data\+Send\+Recieve (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to send and receive data 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_ab2a10efe2c2d5566c02df1b26ca021e3}\label{_client_8h_ab2a10efe2c2d5566c02df1b26ca021e3}} 
+\index{Client.h@{Client.h}!egzaminatorPanel@{egzaminatorPanel}}
+\index{egzaminatorPanel@{egzaminatorPanel}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{egzaminatorPanel()}{egzaminatorPanel()}}
+{\footnotesize\ttfamily void egzaminator\+Panel (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to create Admin panel and all actions that the administrator can perform 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_af5978fab9fa6dd4ced1c3a8ab1251f7b}\label{_client_8h_af5978fab9fa6dd4ced1c3a8ab1251f7b}} 
+\index{Client.h@{Client.h}!getch@{getch}}
+\index{getch@{getch}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{getch()}{getch()}}
+{\footnotesize\ttfamily int getch (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+This function serves to help in writing password that will be unreadable.\+For example \char`\"{}$\ast$$\ast$$\ast$$\ast$$\ast$$\ast$\char`\"{} \mbox{\Hypertarget{_client_8h_a67920f222e5bb0c5c89fc41c3e05c1f8}\label{_client_8h_a67920f222e5bb0c5c89fc41c3e05c1f8}} 
+\index{Client.h@{Client.h}!hash@{hash}}
+\index{hash@{hash}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{hash()}{hash()}}
+{\footnotesize\ttfamily long hash (\begin{DoxyParamCaption}\item[{char $\ast$}]{str }\end{DoxyParamCaption})}
+
+This function serves to hashing the passwords. 
+\begin{DoxyParams}{Parameters}
+{\em string} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_aafa32dd1001070fdde56ac574a504e58}\label{_client_8h_aafa32dd1001070fdde56ac574a504e58}} 
+\index{Client.h@{Client.h}!PermissionGroup@{PermissionGroup}}
+\index{PermissionGroup@{PermissionGroup}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{PermissionGroup()}{PermissionGroup()}}
+{\footnotesize\ttfamily void Permission\+Group (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+
+
+This function serves to give permission that gets group and then this group has permission for the selected exam. 
+
+This function serves to get information this group has permisson for exam or not 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+{\em socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_adf989d07085668f90931c5b17116c3cf}\label{_client_8h_adf989d07085668f90931c5b17116c3cf}} 
+\index{Client.h@{Client.h}!rightAnswer@{rightAnswer}}
+\index{rightAnswer@{rightAnswer}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{rightAnswer()}{rightAnswer()}}
+{\footnotesize\ttfamily void right\+Answer (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to get right answers for the current test 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a532bb986ba1e2f90760239bb38a4f90a}\label{_client_8h_a532bb986ba1e2f90760239bb38a4f90a}} 
+\index{Client.h@{Client.h}!SetTimeOfTest@{SetTimeOfTest}}
+\index{SetTimeOfTest@{SetTimeOfTest}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{SetTimeOfTest()}{SetTimeOfTest()}}
+{\footnotesize\ttfamily void Set\+Time\+Of\+Test (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+This function serves to set time of the test that the egzaminator can set 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a46245f603a3b7d2ef233ff2012f921a6}\label{_client_8h_a46245f603a3b7d2ef233ff2012f921a6}} 
+\index{Client.h@{Client.h}!socketCreate@{socketCreate}}
+\index{socketCreate@{socketCreate}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{socketCreate()}{socketCreate()}}
+{\footnotesize\ttfamily int socket\+Create (\begin{DoxyParamCaption}\item[{int}]{socket\+Type }\end{DoxyParamCaption})}
+
+
+
+This function serves to create socket. 
+
+This function serves to create socket 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Socket\+ID
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & type\\
+\hline
+\end{DoxyParams}
+This array serves for containing result of the exam
+
+This function serves to create socket 
+\begin{DoxyParams}{Parameters}
+{\em Socket} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Socket\+ID
+\end{DoxyReturn}
+This array serves for containing result of the exam \mbox{\Hypertarget{_client_8h_a3f19d4ec9fc31e5adeaef435267b6182}\label{_client_8h_a3f19d4ec9fc31e5adeaef435267b6182}} 
+\index{Client.h@{Client.h}!Stars@{Stars}}
+\index{Stars@{Stars}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{Stars()}{Stars()}}
+{\footnotesize\ttfamily void Stars (\begin{DoxyParamCaption}\item[{char $\ast$}]{buff }\end{DoxyParamCaption})}
+
+
+
+This function serves to create unreadable password. 
+
+This function serves to create unreadable password. 
+\begin{DoxyParams}{Parameters}
+{\em buff} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Char that was entered
+\end{DoxyReturn}
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a54ccb88d46f6031ab0e4442829b96eaa}\label{_client_8h_a54ccb88d46f6031ab0e4442829b96eaa}} 
+\index{Client.h@{Client.h}!studentPanel@{studentPanel}}
+\index{studentPanel@{studentPanel}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{studentPanel()}{studentPanel()}}
+{\footnotesize\ttfamily void student\+Panel (\begin{DoxyParamCaption}\item[{int}]{socket }\end{DoxyParamCaption})}
+
+
+
+This function serves to check thi next things(1.\+Is the exam which entering student at general exist 2.\+Is the student in the group which gets permission for the passing this exam if yes for both questions he can start his exam and enter answers and all answers will send to the server where they will check. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket} & This function serves to create student panel and all actions that the student can perform \\
+\hline
+{\em Socket} & This function serves to check thi next things(1.\+Is the exam which entering student at general exist 2.\+Is the student in the group which gets permission for the passing this exam if yes for both questions he can start his exam and enter answers and all answers will send to the server where they will check.\\
+\hline
+{\em socket} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{_client_8h_a68975b4e59623eab11f6f6e287605d40}\label{_client_8h_a68975b4e59623eab11f6f6e287605d40}} 
+\index{Client.h@{Client.h}!temp@{temp}}
+\index{temp@{temp}!Client.h@{Client.h}}
+\doxysubsubsection{\texorpdfstring{temp()}{temp()}}
+{\footnotesize\ttfamily void temp (\begin{DoxyParamCaption}\item[{char $\ast$}]{buf }\end{DoxyParamCaption})}
+
+This function serves to delete Enter in the buffer 
+\begin{DoxyParams}{Parameters}
+{\em buf} & \\
+\hline
+\end{DoxyParams}

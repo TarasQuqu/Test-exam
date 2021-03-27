@@ -1,0 +1,593 @@
+#ifndef LIB_H
+#define LIB_H
+
+int socketCreate (int socketType);
+int connectCreate (int socket, const char * ip, int port);
+void recieveData (int socket);
+int connectionClose (int socket);
+int portBinding (int socket, int port);
+int listenClient (int socket, int backlog);
+void acceptClients (int socket, void (*func)());
+void authorization();
+char checkLogin();
+void getStudList();
+void getAllList();
+//Anton Serhiienko 16282
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <syslog.h>
+#include <time.h>
+#include <unistd.h>
+#include <arpa/inet.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
+#include "lib.h"
+#define PORT 13667
+#define MAX_BUFFER 1024
+#define AUTH_BUF 24
+//FUNC DECLARATION
+char login[AUTH_BUF];
+char password[AUTH_BUF];
+char permission[1];
+int isClientLoginIn = 0;
+char* errorMsg = "error";
+char* okMsg = "ok";
+char studentList[MAX_BUFFER];
+char accsList[MAX_BUFFER];
+//CLIENT&SERVER:
+int socketCreate (int socketType)
+{
+    int socketId;
+
+    socketId = socket(AF_INET, socketType, 0);
+
+    if (socketId == -1)
+    {
+        fprintf(stderr, "BLAD: nie moge utworzyc socketu: %s\n", strerror(errno));
+        exit(EXIT_FAILURE);
+        return socketId;
+    }
+
+    printf("1) Socket stworzony %d\n", socketId);
+
+    return socketId;
+}
+//SERVER
+int portBinding (int socket, int port)
+{
+    struct sockaddr_in address;
+
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = inet_addr("0.0.0.0");
+    address.sin_port = htons(port);
+    memset( &( address.sin_zero ), '\0', 8 );
+
+    int binded = bind(socket, (struct sockaddr *) & address, sizeof(struct sockaddr));
+
+    if (binded == -1)
+    {
+        fprintf(stderr, "BLAD: nie moge przesluchac portu %d: %s\n", port, strerror(errno));
+        exit(EXIT_FAILURE);
+        return binded;
+    }
+
+    printf("2) Sluchanie portu %d\n", port);
+
+    return binded;
+}
+int listenClient (int socket, int backlog)
+{
+    int listening = listen(socket, backlog);
+
+    if (listening == -1)
+    {
+        fprintf(stderr, "BLAD: nie moge sluchac socketu %d z backlogiem %d: %s\n", socket, backlog, strerror(errno));
+        exit(EXIT_FAILURE);
+        return listening;
+    }
+
+    printf("3) sluchanie socketu %d z backlogiem %d\n", socket, backlog);
+
+    return listening;
+}
+void acceptClients (int socket, void (*func)())
+{
+    int acceptedSocket;
+    struct sockaddr_in address;
+    socklen_t address_len = sizeof(struct sockaddr_in);
+    struct in_addr clientIp;
+    char * ip;
+    unsigned short port;
+
+    while (1==1)
+    {
+        acceptedSocket = accept(socket, (struct sockaddr *) & address, & address_len);
+        clientIp = address.sin_addr;
+        ip = inet_ntoa(clientIp);
+        port = ntohs(address.sin_port);
+
+        if (acceptedSocket == -1)
+        {
+            fprintf(stderr, "BLAD: nie moge zaakceptowac klienta %s:%d: %s\n", ip, port, strerror(errno));
+            exit(EXIT_FAILURE);
+        }
+        //pid_t pid = fork();
+        //if(pid < 0)
+        // printf("Nie moge utworzyc nowego procesu");
+        //if(pid == 0)
+        //{
+        func(acceptedSocket, socket); //Nowy proces obrobki klienta
+        //}
+        //else
+        //{
+
+        //}
+    }
+}
+void newConnection(int socket)
+{
+    char buff[MAX_BUFFER];
+    int n;
+    for(;;)
+    {
+        bzero(buff,MAX_BUFFER);
+        if(isClientLoginIn == 0)
+        {
+            authorization(socket);
+            printf("isClientLogin: %d", isClientLoginIn);
+        }
+        else
+        {
+            bzero(buff, sizeof(buff));
+            n = read(socket,buff,sizeof(buff));
+            if(n == 0)
+            {
+                exit(0);
+            }
+            printf("Permission: %s\n", permission);
+            printf("Command:%s, byte:%d\n", buff,n);
+            printf("HALOBLAT\n");
+            if(*permission == '1') //dla admina
+            {
+                printf("%s zalogowany jako admin\n", login);
+                if (strcmp(buff, "logout") == 0)
+                {
+                    printf("logout\n");
+                    memset(login,'0',AUTH_BUF);
+                    memset(password,'0',AUTH_BUF);
+                    isClientLoginIn = 0;
+                }
+                if (strcmp("add", buff) == 0)
+                {
+                    printf("add\n");
+                    char newLogin[AUTH_BUF];
+                    char newPassword[AUTH_BUF];
+                    char newPermission[1];
+                    int newPermissionInt = -1;
+                    n = read(socket,newLogin,sizeof(newLogin));
+                    if(n < 0)
+                    {
+                        printf("Error read from socket");
+                        break;
+                    }
+                    n = read(socket,newPassword,sizeof(newPassword));
+                    if(n < 0)
+                    {
+                        printf("Error read from socket");
+                        break;
+                    }
+                    n = read(socket,newPermission,sizeof(newPassword));
+                    if(n < 0)
+                    {
+                        printf("Error read from socket");
+                        break;
+                    }
+                    newPermissionInt = atoi(newPermission);
+                    if(newPermissionInt < 1 && newPermissionInt > 3)
+                    {
+                        write(socket,errorMsg,sizeof(errorMsg));
+                    }
+                    else
+                    {
+                        FILE * f;
+                        if ( ( f = fopen("Users.txt", "a") ) != NULL )
+                        {
+                            char newLineUser[MAX_BUFFER];
+                            int i = 0;
+                            int j = 0;
+                            while(newLogin[j] != '\0')
+                            {
+                                newLineUser[i] = newLogin[j];
+                                i++;
+                                j++;
+                            }
+                            i++;
+                            newLineUser[i] = ' ';
+                            i++;
+                            j = 0;
+                            while(newPassword[j] != '\0')
+                            {
+                                newLineUser[i] = newPassword[j];
+                                i++;
+                                j++;
+                            }
+                            newLineUser[i++] = ' ';
+                            newLineUser[i] = newPermissionInt + '0';
+                            int result = fputs(newLineUser,f);
+                            if(!result)
+                            {
+                                write(socket,okMsg,sizeof(okMsg));
+                            }
+                            else
+                            {
+                                write(socket,errorMsg,sizeof(errorMsg));
+                            }
+                            fclose(f);
+
+                        }
+                        else
+                        {
+                            fprintf(stderr, "can't open file Users.txt\n");
+                            write(socket,errorMsg,sizeof(errorMsg));
+                            break;
+                        }
+                    }
+
+
+                }
+                if (strcmp("remove", buff) == 0)
+                {
+                    printf("remove\n");
+                    FILE * f;
+                    if ( (f = fopen ("Users.txt","r")) != NULL )
+                    {
+                        char loginTemp[AUTH_BUF];
+                        char pattern [MAX_BUFFER];
+                        int n = read(socket,loginTemp,sizeof(loginTemp));
+                        if(n < 0)
+                        {
+                            write(socket,errorMsg,sizeof(errorMsg));
+                            break;
+                        }
+
+                        fseek (f,0,SEEK_END);
+                        char storyData[ftell (f)+1];
+                        char * ptr = storyData;
+                        *ptr = 0;
+                        fseek (f,0,SEEK_SET);
+
+                        while ( fgets (pattern,MAX_BUFFER,f) )
+                        {
+                            if ( strncmp (loginTemp,pattern,sizeof(loginTemp)) != 0 )
+                            {
+                                strcat (ptr,pattern);
+                                ptr += strlen (pattern);
+                            }
+                        }
+
+                        fclose (f);
+                        f = fopen ("Users.txt","a");
+                        fputs (storyData,f);
+                        fclose (f);
+                        write(socket,okMsg,sizeof(okMsg));
+                    }
+                    else
+                    {
+                        fprintf(stderr, "can't open file Users.txt\n");
+                        write(socket,errorMsg,sizeof(errorMsg));
+                        break;
+                    }
+
+                }
+                if (strcmp("studList", buff) == 0)
+                {
+                    printf("studList\n");
+                    getStudList();
+                    write(socket,studentList,sizeof(studentList));
+                }
+                if (strcmp("allList", buff) == 0)
+                {
+                    printf("allList\n");
+                    getAllList();
+                    write(socket,accsList,sizeof(accsList));
+                }
+                if (strcmp("createGroup", buff) == 0)
+                {
+                    printf("CreateGroup\n");
+                    FILE * f;
+                    char groupName[MAX_BUFFER];
+                    fflush(NULL);
+                    n = read(socket,groupName,sizeof(groupName));
+                    printf("groupName: %s, byte:%d", groupName, n);
+                    if(n < 0)
+                    {
+                        write(socket,errorMsg,sizeof(errorMsg));
+                        break;
+                    }
+                    char PATH[MAX_BUFFER * 2] = "tests/";
+                    //strcat(PATH,groupName);
+                    //strcat(PATH,".txt");
+                    sprintf(PATH,"tests/%s.txt",groupName);
+                    printf("%s", PATH);
+                    if((f = fopen(PATH, "a")) != NULL)
+                    {
+                        write(socket,okMsg,sizeof(okMsg));
+                        fclose(f);
+                    }
+                    else
+                    {
+                        write(socket,errorMsg,sizeof(errorMsg));
+                    }
+                }
+                if (strcmp("addToGroup", buff) == 0)
+                {
+                    printf("addToGroup\n");
+                    FILE * f = NULL;
+                    int result;
+                    int cnt = 0;
+                    int j = 0;
+                    char groupName[MAX_BUFFER];
+                    n = read(socket,groupName,sizeof(groupName));
+                    if(n < 0)
+                    {
+                        write(socket,errorMsg,sizeof(errorMsg));
+                        break;
+                    }
+                    char PATH[MAX_BUFFER * 2] = "tests/";
+                    sprintf(PATH,"tests/%s.txt",groupName);
+                    if((f = fopen(PATH, "a")) != NULL)
+                    {
+                        n = read(socket,buff,sizeof(buff));
+                        if(n < 0)
+                        {
+                            write(socket,errorMsg,sizeof(errorMsg));
+                            break;
+                        }
+                        cnt++;
+                        getStudList();
+                        while(!strcmp(buff,"stop!") && cnt != 20)
+                        {
+                            for(int i = 0; i < strlen(studentList); i++)
+                            {
+                                if(buff[j] == studentList[i])
+                                {
+                                    j++;
+                                    if(buff[j] == '\n')
+                                    {
+                                        result = fputs(buff,f);
+                                        if(!result)
+                                        {
+                                            write(socket,okMsg,sizeof(okMsg));
+                                        }
+                                        else
+                                        {
+                                            write(socket,errorMsg,sizeof(errorMsg));
+                                            break;
+                                        }
+                                        n = read(socket,buff,sizeof(buff));
+                                        if(n < 0)
+                                        {
+                                            write(socket,errorMsg,sizeof(errorMsg));
+                                            break;
+                                        }
+                                        cnt++;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    j = 0;
+                                    for(;buff[i] != '\n';i++)
+                                    {
+
+                                    }
+                                    i++;
+                                }
+                            }
+                        }
+                        fclose(f);
+                    }
+                    else
+                    {
+                        write(socket,errorMsg,sizeof(errorMsg));
+                    }
+
+                }
+            }
+            if(*permission == '2') //dla egzaminatora
+            {
+                printf("%s zalogowany jako egzaminator", login);
+                if (strcmp("logout", buff) == 0)
+                {
+                    memset(login,'0',AUTH_BUF);
+                    memset(password,'0',AUTH_BUF);
+                    isClientLoginIn = 0;
+                    *permission = '0';
+                }
+            }
+            if(*permission == '3') //dla studenta
+            {
+                printf("%s zalogowany jako student", login);
+                if (strcmp("logout", buff) == 0)
+                {
+                    memset(login,'0',AUTH_BUF);
+                    memset(password,'0',AUTH_BUF);
+                    isClientLoginIn = 0;
+                    *permission = '0';
+                }
+            }
+        }
+    }
+}
+
+
+void getStudList(int socket)
+{
+    char buf[MAX_BUFFER];
+    FILE * f;
+    if ( ( f = fopen("Users.txt", "r") ) != NULL )
+    {
+        char pattern [MAX_BUFFER];
+        char storyData[MAX_BUFFER];
+        char * ptr = storyData;
+        char loginTemp[25];
+        *ptr = 0;
+        while ( fgets(pattern, MAX_BUFFER, f) )
+        {
+            int i = 0;
+            printf("%s", pattern);
+            if(pattern[strlen(pattern) - 1] == '3')
+            {
+                while(pattern[i] != ' ')
+                {
+                    loginTemp[i] = buf[i];
+                    i++;
+                }
+                loginTemp[i+1] = '\n';
+                strcat(ptr,loginTemp);
+                ptr += strlen(loginTemp);
+            }
+
+        }
+        fclose(f);
+        *studentList = *storyData;
+    }
+    else
+    {
+        fprintf(stderr, "can't open file Users.txt\n");
+        write(socket,errorMsg,sizeof(errorMsg));
+    }
+}
+void getAllList(int socket)
+{
+    char buf[MAX_BUFFER];
+    FILE * f;
+    if ( ( f = fopen("Users.txt", "r") ) != NULL )
+    {
+        char pattern [MAX_BUFFER];
+        char storyData[MAX_BUFFER];
+        char * ptr = storyData;
+        char loginTemp[25];
+        *ptr = 0;
+        while ( fgets(pattern, MAX_BUFFER, f) )
+        {
+            int i = 0;
+            printf("%s", pattern);
+            while(pattern[i] != ' ')
+            {
+                loginTemp[i] = buf[i];
+                i++;
+            }
+            loginTemp[i+1] = '\n';
+            strcat(ptr,loginTemp);
+            ptr += strlen(loginTemp);
+
+        }
+        fclose(f);
+        *accsList = *storyData;
+    }
+    else
+    {
+        fprintf(stderr, "can't open file Users.txt\n");
+        write(socket,errorMsg,sizeof(errorMsg));
+    }
+}
+
+void authorization(int socket)
+{
+    int n;
+    n = read(socket,login,sizeof(login));
+    printf("%s\n", login);
+    if(n < 0)
+        printf("Error read from socket");
+    n = read(socket,password,sizeof(password));
+    printf("%s\n", password);
+    for(int i = 0; i < AUTH_BUF; i++)
+    {
+        printf("%c", password[i]);
+    }
+    printf("\n");
+    if(n < 0)
+        printf("Error read from socket");
+    if((*permission = checkLogin(login,password)) != '0')
+    {
+        isClientLoginIn = 1;
+        printf("Permission: %s", permission);
+        write(socket,permission,sizeof(permission));
+
+    }
+    else
+    {
+        isClientLoginIn = 0;
+        memset(login,'0',AUTH_BUF);
+        memset(password,'0',AUTH_BUF);
+        *permission = '0';
+        write(socket,permission,sizeof(permission));
+    }
+}
+
+char checkLogin()
+{
+    FILE * f;
+    char buf[MAX_BUFFER];
+    char loginTemp[AUTH_BUF];
+    char passwordTemp[AUTH_BUF];
+    if ( ( f = fopen("Users.txt", "r") ) == NULL )
+    {
+        fprintf(stderr, "can't open file Users.txt\n");
+        return '0';
+    }
+    while ( fgets(buf, MAX_BUFFER, f) )
+    {
+        memset(loginTemp,'\0',AUTH_BUF);
+        memset(passwordTemp,'\0',AUTH_BUF);
+        int i = 0;
+        int j = 0;
+        printf("%s\n", buf);
+        while(buf[i] != ' ' && buf[i] != '\n' &&  buf[i] != '\0')
+        {
+            loginTemp[j] = buf[i];
+            i++;
+            j++;
+        }
+        loginTemp[j] = '\0';
+        j = 0;
+        i++;
+        while(buf[i] != ' ' && buf[i] != '\n' &&  buf[i] != '\0')
+        {
+            passwordTemp[j] = buf[i];
+            i++;
+            j++;
+        }
+        passwordTemp[j] = '\0';
+        i++;
+        printf("%s - %s ... %s - %s\n",login,loginTemp,password,passwordTemp);
+        int strcmpTemp = strcmp(loginTemp,login);
+        printf("Compare result: %d\n", strcmpTemp);
+        strcmpTemp = strcmp(passwordTemp,password);
+        printf("Compare result: %d\n", strcmpTemp);
+        if(strcmp(loginTemp,login) == 0 && strcmp(passwordTemp,password) == 0)
+        {
+            printf("%s \n", loginTemp);
+            printf("%s", login);
+            *permission = buf[i];
+            break;
+        }
+    }
+    if ( ferror(f) )
+    {
+        fprintf(stderr, "error while reading file User.txt\n");
+        return 1;
+    }
+    fclose(f);
+    return *permission;
+
+
+}
+
+#endif
