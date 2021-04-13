@@ -1,0 +1,35 @@
+The application allows you to create and conduct a test exam. 3 types of users:
+administrator, examiner and student. The administrator creates student groups and assigns students to them. The examiner enters the test exam (all closed questions) stating for
+all questions:
+The content of the question,
+Proposed answers (at most 5),
+Correct answer (only 1).
+The examiner conducts the examination by making it available to a selected group of students for a specified period of time
+and runs automatic checking of test results for individual students.
+After checking, the test result is assigned to individual students
+The student logs in, enters the answers to individual questions and looks at the results
+• Server
+The server will be made in "C" language. The student list, test list, group list, question list, answer list, correct answer list will be stored in different files.
+After receiving a request from the client, the server will check which user is logged in and will receive its menu accordingly (Admin, Egzamentatir, Student).
+• Customer
+The client will be an application written in "C" language. It will send a query to the server with the data that will be processed on the server (Authorization-Menu).
+• Protocols used
+• A protocol for communication between the client and the TCP server
+•	Admission
+
+TCP / IP defines how data is exchanged over the internet by providing a direct link that defines how it should be packetized, addressed, forwarded, transported, and retrieved at 
+its destination
+• Technology
+The basic assumption of the TCP / IP model is the division of the entire issue of network communication into a number of cooperating layers.
+Each of them can be created by programmers completely independently, if we impose certain protocols according to which they exchange information. The assumptions of the TCP / IP
+model are similar to the OSI model in terms of layer organization. However, the number of layers is smaller and more reflects the true structure of the internet. The TCP / IP 
+model consists of four layers.
+Layer:
+• Application layer
+• Transport layer
+• The Internet layer
+• Network access layer
+• Functionality:
+This protocol provides the following functionality:
+In order for the TCP protocol to start, we must openly establish contact with the server, send a request and wait for a response that we are connected. TCP is not the fastest, 
+but with single requests, there is no need for it to run as fast as possible.
